@@ -5,10 +5,10 @@ dropdownMenuContainer.style.width = '20%';
 
 var dropdownMenu = document.createElement('div');
 dropdownMenuContainer.appendChild(dropdownMenu);
-dropdownMenu.style.cssText = '';
-dropdownMenu.style.width = '150px';
-dropdownMenu.style.height = '50px';
-dropdownMenu.textContent = 'this is a dropdown';
+dropdownMenu.style.cssText = 'background-color:rgba(0, 236, 255, 0.11); margin-left:5%; padding-top:80px; padding-bottom:80px; padding-left:10px; border-radius:100px; box-shadow: 10px 10px 8px #888888; font-size:20px; overflow: auto;';
+dropdownMenu.style.width = '200px';
+dropdownMenu.style.height = '60%';
+dropdownMenu.textContent = 'Selecteer het apparaat dat u heeft. ';
 
 var itemsContainer = document.createElement('div');
 parentContainer.appendChild(itemsContainer);
@@ -32,11 +32,21 @@ var koelkastMetVriezer = {
     wattusage: '75'
 };
 
+var een = 1;
+var twee = 2; 
+var drie = 3; 
+var vier = 4; 
+var vijf = 5;
 
 var optionsList = {
     vriezer,
     koelkast,
-    koelkastMetVriezer
+    koelkastMetVriezer,
+    een,
+    twee,
+    drie,
+    vier,
+    vijf
 };
 
 
@@ -46,11 +56,19 @@ class Options {
         for (var x = Object.keys(optionsList).length; x > 0; x--) {
             this.domElem = document.createElement('div');
             dropdownMenuOptionsContainer.appendChild(this.domElem);
-            this.domElem.style.cssText = 'height: 50px; width: 150px; background-color: red; border-style: solid;';
+            this.domElem.style.cssText = 'height: 50px; width: 92.5%; background-color: rgba(175, 105, 216, 0.20); border-style:solid; border-width: 1px 1px 0px 1px; overflow: auto; ';
             var item = optionsList[Object.keys(optionsList)[x - 1]];
             this.domElem.textContent = item.name;
+            
+            if (x == 3){
+                this.domElem.style.marginTop = '20px';
+            };
 
             if (x == 1) {
+                this.domElem.style.borderWidth = '1px 1px 1px 1px';
+            };
+            if (x == 1) {
+                
                 this.domElem.onmousedown = function e() {
                     objectClicked(optionsList, 1);
                 };
