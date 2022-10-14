@@ -1,7 +1,7 @@
 var dropdownMenuContainer = document.createElement('div');
 parentContainer.appendChild(dropdownMenuContainer);
-dropdownMenuContainer.style.cssText = 'display: flex; justify-content: center; align-items: center;';
-dropdownMenuContainer.style.width = '100%';
+dropdownMenuContainer.style.cssText = 'display: flex; margin-top: 7%; justify-content: flex-start; flex-direction: column; overflow: auto;'; 
+dropdownMenuContainer.style.width = '20%';
 
 var dropdownMenu = document.createElement('div');
 dropdownMenuContainer.appendChild(dropdownMenu);
@@ -10,6 +10,9 @@ dropdownMenu.style.width = '150px';
 dropdownMenu.style.height = '50px';
 dropdownMenu.textContent = 'this is a dropdown';
 
+var itemsContainer = document.createElement('div');
+parentContainer.appendChild(itemsContainer);
+itemsContainer.style.cssText = 'display: flex; margin-top: 7%; justify-content: flex-start; flex-direction: column; overflow: auto;'; 
 
 
 
@@ -49,17 +52,17 @@ class Options {
 
             if (x == 1) {
                 this.domElem.onmousedown = function e() {
-                objectClicked(optionsList, 1);
+                    objectClicked(optionsList, 1);
                 };
             };
             if (x == 2) {
                 this.domElem.onmousedown = function e() {
-                objectClicked(optionsList, 2);
+                    objectClicked(optionsList, 2);
                 };
             };
             if (x == 3) {
                 this.domElem.onmousedown = function e() {
-                objectClicked(optionsList, 3);
+                    objectClicked(optionsList, 3);
                 };
             };
         };
@@ -90,11 +93,45 @@ function onHoverLeave(dropdownMenuOptionsContainer) {
 
 function objectClicked(optionsList, x) {
     console.log(optionsList, x);
-    var item = optionsList[Object.keys(optionsList)[x-1]]; 
-    var domElem = document.createElement('div');
-    parentContainer.appendChild(domElem);
-    domElem.textContent = item.name;
-    domElem.style.cssText = 'display: flex; align-items: center;';
+    var item = optionsList[Object.keys(optionsList)[x - 1]];
+    var domElemContainer = document.createElement('div');
+    itemsContainer.appendChild(domElemContainer);
+    domElemContainer.textContent = item.name;
+    domElemContainer.style.cssText = 'display: flex; align-items: center; margin-bottom: 5%;';
 
-    console.log(item.timeOnHours * item.wattusage / 1000 * 0.81);
+    
+    var domInputWatt = document.createElement('INPUT');
+    domInputWatt.setAttribute("value", item.wattusage);
+    domElemContainer.appendChild(domInputWatt);
+
+    var domInputTime = document.createElement('INPUT');
+    domInputTime.setAttribute("value", item.timeOnHours);
+    domElemContainer.appendChild(domInputTime);
+
+    var domInputPrice = document.createElement('INPUT');
+    domInputPrice.setAttribute("value", "Price you pay per kWu.");
+    domElemContainer.appendChild(domInputPrice);
+    
+    var domButton = document.createElement('div');
+    domElemContainer.appendChild(domButton);
+    domButton.style.height = '20px';
+    domButton.style.width = '20px';
+    domButton.style.backgroundColor = 'red';
+
+    var domElemkWu = document.createElement('div');
+    domElemContainer.appendChild(domElemkWu);
+    
+    var domElemPrice = document.createElement('div');
+    domElemContainer.appendChild(domElemPrice);
+
+
+    domButton.onmousedown = function e() {getInputBoxValue(domElemkWu, domElemPrice, domInputWatt, domInputTime, domInputPrice)};
+};
+
+
+function getInputBoxValue(domElemkWu, domElemPrice, domInputWatt, domInputTime, domInputPrice) {
+    var kWuUse = domInputWatt.value * domInputTime.value / 1000;
+    var price = domInputPrice.value * kWuUse * 365;
+    domElemkWu.textContent = 'this is the use in kWu per day: ' + kWuUse;
+    domElemPrice.textContent = 'this is the amount you pay for it per year: $' + price;
 };
